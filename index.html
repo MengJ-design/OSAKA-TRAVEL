@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>旅途記錄 — 大阪五日</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+
+  :root {
+    --ink: #1c1c1e;
+    --mid: #6e6e73;
+    --light: #f5f5f0;
+    --accent: #3d6b8e;
+    --accent-pale: #e8f0f6;
+    --white: #ffffff;
+    --border: #e0dfd8;
+    --green: #2e7d5e;
+    --green-pale: #eaf4ef;
+    --rose: #8e3d5a;
+    --rose-pale: #f6e8ed;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--light);
+    color: var(--ink);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245,245,240,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1rem; font-weight: 700; color: var(--ink);
+    text-decoration: none; letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a {
+    font-size: 0.82rem; color: var(--mid); text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    padding: 80px 32px 60px;
+    max-width: 760px; margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.12em; color: var(--accent);
+    text-transform: uppercase; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: inline-block;
+    width: 24px; height: 1px; background: var(--accent);
+  }
+  .hero h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700; line-height: 1.25;
+    margin-bottom: 20px; color: var(--ink);
+  }
+  .hero-meta {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    font-size: 0.82rem; color: var(--mid);
+  }
+  .hero-meta span { display: flex; align-items: center; gap: 5px; }
+
+  /* MAIN LAYOUT */
+  .main { max-width: 760px; margin: 0 auto; padding: 0 32px 80px; }
+
+  /* SECTION */
+  .section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  .section:last-child { border-bottom: none; }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.12em; color: var(--mid);
+    text-transform: uppercase; margin-bottom: 24px;
+  }
+
+  /* FLIGHT */
+  .flight-row {
+    display: grid; grid-template-columns: 80px 1fr 80px;
+    align-items: center; gap: 12px;
+    padding: 18px 0; border-bottom: 1px dashed var(--border);
+  }
+  .flight-row:last-child { border-bottom: none; }
+  .flight-dir { font-size: 0.72rem; color: var(--mid); }
+  .flight-main { text-align: center; }
+  .flight-route {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.05rem; font-weight: 700; letter-spacing: 0.04em;
+  }
+  .flight-time { font-size: 0.78rem; color: var(--mid); margin-top: 3px; }
+  .flight-note { font-size: 0.72rem; color: var(--mid); text-align: right; }
+  .flight-badge {
+    display: inline-block; background: var(--accent-pale);
+    color: var(--accent); font-size: 0.7rem; padding: 2px 8px;
+    border-radius: 3px; letter-spacing: 0.04em;
+  }
+
+  /* HOTEL CARDS */
+  .hotel-list { display: flex; flex-direction: column; gap: 1px; }
+  .hotel-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 24px;
+    transition: box-shadow 0.2s;
+  }
+  .hotel-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+  .hotel-card + .hotel-card { margin-top: 12px; }
+
+  .hotel-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+  .hotel-name {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1rem; font-weight: 700; line-height: 1.4;
+  }
+  .hotel-room { font-size: 0.78rem; color: var(--mid); margin-top: 3px; }
+  .hotel-price-wrap { text-align: right; flex-shrink: 0; }
+  .hotel-price-total { font-size: 1.05rem; font-weight: 500; color: var(--ink); }
+  .hotel-price-pp { font-size: 0.75rem; color: var(--mid); margin-top: 2px; }
+
+  .hotel-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+
+  .hotel-info { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 520px) { .hotel-info { grid-template-columns: 1fr; } }
+  .hotel-info-block { font-size: 0.8rem; color: var(--mid); line-height: 1.8; }
+  .hotel-info-block strong { color: var(--ink); font-weight: 500; display: block; margin-bottom: 4px; }
+
+  .hotel-links { display: flex; gap: 10px; margin-top: 16px; }
+  .btn {
+    font-size: 0.75rem; padding: 6px 14px; border-radius: 2px;
+    text-decoration: none; letter-spacing: 0.04em; font-weight: 500;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.75; }
+  .btn-primary { background: var(--accent); color: var(--white); }
+  .btn-secondary { background: var(--white); color: var(--mid); border: 1px solid var(--border); }
+
+  .badge-accent { background: var(--accent-pale); color: var(--accent); }
+  .badge-green  { background: var(--green-pale);  color: var(--green); }
+  .badge-rose   { background: var(--rose-pale);   color: var(--rose); }
+  .hotel-badge {
+    display: inline-block; font-size: 0.68rem; padding: 2px 8px;
+    border-radius: 2px; letter-spacing: 0.04em; margin-bottom: 6px;
+  }
+
+  /* SUMMARY BAR */
+  .summary-bar {
+    background: var(--ink); color: var(--white);
+    border-radius: 2px; padding: 20px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px; margin-top: 20px;
+  }
+  .summary-bar .s-label { font-size: 0.72rem; color: #a1a1aa; letter-spacing: 0.08em; text-transform: uppercase; }
+  .summary-bar .s-val { font-size: 1.05rem; font-weight: 500; margin-top: 3px; }
+
+  /* ROUTE */
+  .route-block {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 2px; padding: 24px;
+    font-size: 0.82rem; line-height: 2.1; color: var(--ink);
+    font-family: 'Noto Sans TC', monospace; white-space: pre-wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 32px;
+    font-size: 0.75rem; color: var(--mid);
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 12px 20px; }
+    .hero { padding: 48px 20px 40px; }
+    .main { padding: 0 20px 60px; }
+    .flight-row { grid-template-columns: 60px 1fr; }
+    .flight-note { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">旅途記錄</a>
+  <div class="nav-links">
+    <a href="#flight">航班</a>
+    <a href="#hotels">住宿</a>
+    <a href="#route">交通</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Japan · Osaka</div>
+  <h1>大阪五日<br>機加酒行程統整</h1>
+  <div class="hero-meta">
+    <span>📅 2026 / 09 / 12 — 09 / 16</span>
+    <span>✈️ 星宇航空 台中直飛神戶</span>
+    <span>🏨 4 晚住宿</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- 航班 -->
+  <div class="section" id="flight">
+    <div class="section-label">航班資訊</div>
+    <div class="flight-row">
+      <div>
+        <div class="flight-dir">去程</div>
+        <div class="flight-dir">9 / 12</div>
+        <div style="margin-top:6px;"><span class="flight-badge">JX306</span></div>
+      </div>
+      <div class="flight-main">
+        <div class="flight-route">台中 RMQ → 神戶 UKB</div>
+        <div class="flight-time">08:45 起飛　→　12:30 抵達</div>
+      </div>
+      <div class="flight-note">早出<br>完美班機</div>
+    </div>
+    <div class="flight-row">
+      <div>
+        <div class="flight-dir">回程</div>
+        <div class="flight-dir">9 / 16</div>
+        <div style="margin-top:6px;"><span class="flight-badge">JX307</span></div>
+      </div>
+      <div class="flight-main">
+        <div class="flight-route">神戶 UKB → 台中 RMQ</div>
+        <div class="flight-time">13:30 起飛　→　15:35 抵達</div>
+      </div>
+      <div class="flight-note">輕鬆<br>回程</div>
+    </div>
+  </div>
+
+  <!-- 住宿 -->
+  <div class="section" id="hotels">
+    <div class="section-label">住宿方案比較（含機票 + 雙人早餐）</div>
+    <div class="hotel-list">
+
+      <div class="hotel-card">
+        <span class="hotel-badge badge-green">推薦 · 最便宜</span>
+        <div class="hotel-top">
+          <div>
+            <div class="hotel-name">大阪堺筋本町<br>大和 ROYNET PREMIER 飯店</div>
+            <div class="hotel-room">高級大床房（禁菸）｜ 20 m²</div>
+          </div>
+          <div class="hotel-price-wrap">
+            <div class="hotel-price-total">NT$ 39,814</div>
+            <div class="hotel-price-pp">每人 NT$ 19,907</div>
+          </div>
+        </div>
+        <hr class="hotel-divider">
+        <div class="hotel-info">
+          <div class="hotel-info-block">
+            <strong>核心交通</strong>
+            神戶新交通 → 三之宮站<br>
+            JR 神戶線（新快速）→ 大阪站<br>
+            地鐵御堂筋線 → 本町站
+          </div>
+          <div class="hotel-info-block">
+            <strong>最近出口</strong>
+            堺筋本町站<br>
+            14 / 15 號出口<br>
+            步行約 1–2 分鐘
+          </div>
+        </div>
+        <div class="hotel-links">
+          <a class="btn btn-primary" href="https://www.trip.com/w/1T541TJm3V2" target="_blank">Trip.com 訂房</a>
+          <a class="btn btn-secondary" href="https://vialife.tw/21933/" target="_blank">旅客介紹</a>
+        </div>
+      </div>
+
+      <div class="hotel-card">
+        <span class="hotel-badge badge-accent">澱屋橋位置</span>
+        <div class="hotel-top">
+          <div>
+            <div class="hotel-name">Resol Trinity 飯店<br>— 大阪澱屋橋</div>
+            <div class="hotel-room">大床房（禁菸）｜ 19 m²</div>
+          </div>
+          <div class="hotel-price-wrap">
+            <div class="hotel-price-total">NT$ 42,056</div>
+            <div class="hotel-price-pp">每人 NT$ 21,028</div>
+          </div>
+        </div>
+        <hr class="hotel-divider">
+        <div class="hotel-info">
+          <div class="hotel-info-block">
+            <strong>核心交通</strong>
+            神戶新交通 → 三之宮站<br>
+            JR 神戶線（新快速）→ 大阪站<br>
+            地鐵御堂筋線 → 澱屋橋站
+          </div>
+          <div class="hotel-info-block">
+            <strong>最近出口</strong>
+            澱屋橋站<br>
+            8 / 11 號出口<br>
+            步行約 3–5 分鐘
+          </div>
+        </div>
+        <div class="hotel-links">
+          <a class="btn btn-primary" href="https://www.trip.com/w/D2DRde6l3V2" target="_blank">Trip.com 訂房</a>
+          <a class="btn btn-secondary" href="https://pengu777.com/hotel-resol-trinity-osaka/" target="_blank">旅客介紹</a>
+        </div>
+      </div>
+
+      <div class="hotel-card">
+        <span class="hotel-badge badge-rose">本町精品</span>
+        <div class="hotel-top">
+          <div>
+            <div class="hotel-name">大阪本町利夫利飯店<br>（The Lively）</div>
+            <div class="hotel-room">Superior Double｜ 20 m² / 1 張大雙人床</div>
+          </div>
+          <div class="hotel-price-wrap">
+            <div class="hotel-price-total">NT$ 44,538</div>
+            <div class="hotel-price-pp">每人 NT$ 22,269</div>
+          </div>
+        </div>
+        <hr class="hotel-divider">
+        <div class="hotel-info">
+          <div class="hotel-info-block">
+            <strong>核心交通</strong>
+            神戶新交通 → 三之宮站<br>
+            JR 神戶線（新快速）→ 大阪站<br>
+            地鐵御堂筋線 → 本町站
+          </div>
+          <div class="hotel-info-block">
+            <strong>最近出口</strong>
+            堺筋本町站<br>
+            5 號出口<br>
+            步行約 1–2 分鐘
+          </div>
+        </div>
+        <div class="hotel-links">
+          <a class="btn btn-primary" href="https://www.trip.com/w/nRvl0qVm3V2" target="_blank">Trip.com 訂房</a>
+          <a class="btn btn-secondary" href="https://www.bigfang.tw/blog/post/the-lively-honmachi" target="_blank">旅客介紹</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="summary-bar">
+      <div>
+        <div class="s-label">三方案平均總價（雙人）</div>
+        <div class="s-val">NT$ 42,136</div>
+      </div>
+      <div>
+        <div class="s-label">每人均價</div>
+        <div class="s-val">NT$ 21,068</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 交通 -->
+  <div class="section" id="route">
+    <div class="section-label">交通路線（神戶機場 → 各飯店）</div>
+    <div class="route-block">🛫 神戶機場 (UKB)
+  │
+  ▼  神戶新交通 Port Liner　約 18 分鐘
+🚉 三之宮站（終點站）
+  │
+  ▼  沿連通道步行 2 分鐘 → JR 三之宮站
+🚄 JR 三之宮站
+  │
+  ▼  JR 神戶線・新快速　約 21 分鐘直達
+🏢 JR 大阪站
+  │
+  ▼  往「御堂筋口」出站，跟隨紅色 M 指標步行 5–8 分鐘
+🚇 Osaka Metro 御堂筋線 — 梅田站
+  │
+  ├─ 🟢 4 分鐘 → 澱屋橋站
+  │          └─ 8 / 11 號出口 → Resol Trinity 飯店
+  │
+  └─ 🔵 6 分鐘 → 本町站（站內走中央線連通道）
+               ├─ 14 / 15 號出口 → 大和 ROYNET PREMIER 飯店
+               └─ 5 號出口 → 大阪本町利夫利飯店</div>
+  </div>
+
+</div>
+
+<footer>
+  旅途記錄 · 大阪 2026 · 以 Claude 製作
+</footer>
+
+</body>
+</html>
